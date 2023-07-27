@@ -19,4 +19,7 @@ migversion:
 sqlc:
 	sqlc generate
 
-.PHONY: postgres createdb dropdb migup migdown migversion sqlc
+test:
+	go test -v -cover ./...
+
+.PHONY: postgres createdb dropdb migup migdown migversion sqlc test
