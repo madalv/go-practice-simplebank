@@ -1,4 +1,4 @@
-module github.com/madalv/simplebank
+module simplebank
 
 go 1.20
 
