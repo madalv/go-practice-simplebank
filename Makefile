@@ -25,4 +25,7 @@ sqlc:
 test:
 	go test -v -cover ./...
 
-.PHONY: postgres createdb dropdb migup migdown migversion sqlc test startdb
+server:
+	go run main.go
+
+.PHONY: postgres createdb dropdb migup migdown migversion sqlc test startdb server
