@@ -28,4 +28,7 @@ test:
 server:
 	go run main.go
 
-.PHONY: postgres createdb dropdb migup migdown migversion sqlc test startdb server
+mock:
+	mockgen -destination  db/mock/store.go -package mockdb  simplebank/db/sqlc Store 
+
+.PHONY: postgres createdb dropdb migup migdown migversion sqlc test startdb server mock
