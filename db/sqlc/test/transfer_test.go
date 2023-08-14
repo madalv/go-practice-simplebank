@@ -5,15 +5,17 @@ import (
 	"testing"
 	"time"
 
+	db "simplebank/db/sqlc"
 	"simplebank/util"
+
 	"github.com/stretchr/testify/require"
 )
 
-func createRandomTransfer(t *testing.T, from Account, to Account) Transfer {
-	arg := CreateTransferParams {
+func createRandomTransfer(t *testing.T, from db.Account, to db.Account) db.Transfer {
+	arg := db.CreateTransferParams{
 		FromAccountID: from.ID,
-		ToAccountID: to.ID,
-		Amount: util.RandomAmount(),
+		ToAccountID:   to.ID,
+		Amount:        util.RandomAmount(),
 	}
 
 	tran, err := testQueries.CreateTransfer(context.Background(), arg)
@@ -49,8 +51,7 @@ func TestGetTransfer(t *testing.T) {
 	require.WithinDuration(t, created.CreatedAt, tran.CreatedAt, time.Second)
 }
 
-
-func testTransferArray(t *testing.T, tran []Transfer, len int) {
+func testTransferArray(t *testing.T, tran []db.Transfer, len int) {
 	require.NotEmpty(t, tran)
 	require.Len(t, tran, len)
 
@@ -68,18 +69,18 @@ func TestListTransfers(t *testing.T) {
 		createRandomTransfer(t, to, from)
 	}
 
-	arg1 := ListTransfersParams {
+	arg1 := db.ListTransfersParams{
 		FromAccountID: from.ID,
-		ToAccountID: to.ID,
-		Limit: 5,
-		Offset: 0,
+		ToAccountID:   to.ID,
+		Limit:         5,
+		Offset:        0,
 	}
 
-	arg2 := ListTransfersParams {
+	arg2 := db.ListTransfersParams{
 		FromAccountID: to.ID,
-		ToAccountID: from.ID,
-		Limit: 5,
-		Offset: 0,
+		ToAccountID:   from.ID,
+		Limit:         5,
+		Offset:        0,
 	}
 
 	trans1, err := testQueries.ListTransfers(context.Background(), arg1)
