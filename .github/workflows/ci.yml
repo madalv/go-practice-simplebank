@@ -41,6 +41,10 @@ jobs:
           sudo mv migrate /usr/bin/migrate
           which migrate
 
+      - name: Create env file
+        run: | 
+          echo "${{ secrets.ENV_FILE}}" > config.env
+
       - name: Run migrations
         run: make migup
 

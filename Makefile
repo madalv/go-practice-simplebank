@@ -13,8 +13,14 @@ createdb:
 migup:
 	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose up
 
+migup:
+	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose up 1
+
 migdown:
 	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose down
+
+migdown1:
+	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose down 1
 
 migversion:
 	migrate -path db/migration -database "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable" -verbose force $(vs)
@@ -31,4 +37,4 @@ server:
 mock:
 	mockgen -destination  db/mock/store.go -package mockdb  simplebank/db/sqlc Store 
 
-.PHONY: postgres createdb dropdb migup migdown migversion sqlc test startdb server mock
+.PHONY: postgres createdb dropdb migup migdown migversion sqlc test startdb server mock migup1 migdown1
